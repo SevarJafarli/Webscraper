@@ -10,22 +10,22 @@
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <title>Search</title>
+    <title>Home</title>
     <style>
-        .slidecontainer {
-            width: 100%;
-        }
-
         * {
             box-sizing: border-box;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         }
 
         /* Create two equal columns that floats next to each other */
         .column {
             float: left;
-            width: 33%;
-            padding: 10px;
+
+
+            width: 50%;
+            padding: 15px;
             height: 300px;
+
             /* Should be removed. Only for demonstration */
         }
 
@@ -41,13 +41,14 @@
 
 </head>
 
-<body>
+<body style="background-color: rgb(255, 253, 253)">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar">
             <div class="navbar-nav">
+
                 {% if user.is_authenticated %}
                 <a class="nav-item nav-link" id="home" href="/">Home</a>
                 <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
@@ -83,99 +84,114 @@
 
     <br>
 
-    {% if user.is_authenticated %}
-    
-    <form action="/process" method="POST">
-        <input type="checkbox" id="amazon" name="store" value="amazon">
-        <label for="amazon">Amazon</label>
-        <br>
-        <input type="checkbox" id="aliexpress" name="store" value="aliexpress">
-        <label for="aliexpress">AliExpress</label>
-        <br>
-        <input type="checkbox" id="tapaz" name="store" value="tapaz">
-        <label for="tapaz">TapAz</label>
-        <br>
+    <div class="container">
+        {% if user.is_authenticated %}
+        <form action="/process" method="POST">
+            <h4 class="text-info">Websites</h4>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="amazon" name="store" value="amazon">
+                <label class="form-check-label" for="amazon">Amazon</label>
+            </div>
 
-        <!-- <div class="slidecontainer">
-            <p>Default range slider:</p>
-            <input type="range" min="1" max="10000" value="50">
-        </div> -->
-        <br>
-            <form>
-                <select class='form-control mb-0' name="Currency">
-                <option value="usd">USD</option>
-                <option value="azn">AZN</option>
-            </select>
-            </form>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tapaz" name="store" value="tapaz">
+                <label class="form-check-label" for="tapaz">TapAz</label>
+            </div>
+
             <br>
-            
-            <!-- <form>
-                <select class="form-control mb-0" name="ascending">
-                    <option value="true">Ascending</option>
-                    <option value="false">Descending</option>
+            <br>
+            <h4 class="text-info">Filter by:</h4>
+            <br>
+            <div>
+                <select class="form-control mb-0" name="ascending"
+                    style="width: 200px; border-color:black; border-style:solid;">
+                    <option value="ascending">Ascending</option>
+                    <option value="descending">Descending</option>
                 </select>
-            </form>
+            </div>
             <br>
-            <form>
-                <select class="form-control mb-0" name="filteroption">
-                    <option value="shipping">Shipping</option>
+
+            <div>
+                <select class="form-control mb-0" name="filteroption"
+                    style=" width: 200px; border-color:black; border-style:solid;">
+                    <option value="shipping">Shipping</option> 
                     <option value="price">Price</option>
                 </select>
-            </form>
-        
-        <section>
-            <form>
+            </div>
+
+            <section>
+
                 <div class="d-flex align-items-center mt-4 pb-1">
                     <div class="md-form md-outline my-0">
-                        <input id="from" type="text" class="form-control mb-0" name="from">
-                        <label for="form"> Min</label>
+                        <input id="from" type="text" class="form-control mb-0" name="from" autocomplete="off"
+                            style="width: 80px; border-color:black; border-style:solid;">
+                        <label for="form">Min</label>
                     </div>
-                    <p class="px-2 mb-0 text-muted"> - </p>
+                    <p class="px-2 mb-0 text-muted"> </p>
                     <div class="md-form md-outline my-0">
-                        <input id="to" type="text" class="form-control mb-0" name="to">
-                        <label for="to"> Max</label>
+                        <input id="to" type="text" class="form-control mb-0" name="to" autocomplete="off"
+                            style="width: 80px; border-color:black; border-style:solid;">
+                        <label for="to">Max</label>
                     </div>
                 </div>
-            </form>
-        </section> -->
-        <!-- <form action="/process" method="POST"> -->
+
+
+            </section>
+            <h4 class="text-info">Currency</h4>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="usd" name="currency" value="usd">
+                <label class="form-check-label" for="usd">USD</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="azn" name="currency" value="azn">
+                <label class="form-check-label" for="azn">AZN</label>
+            </div>
+
+            <br>
+            <br>
+
+
             <div class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
                 <input class="form-control mb-0" type="text" class='form-control' name="search_text"
-                    placeholder="Search...">
+                    placeholder="Search..." style="border-color:black; border-style:solid;">
+                <p class="px-2 mb-0 text-muted"> </p>
                 <button type="submit" id='button-addon2' name='search_button' value="Search"
-                    class="btn btn-primary">Search</button>
+                    class="btn btn-info">Search</button>
             </div>
+
+
+
         </form>
-    
-    <br>
-    <br>
-    <br>
 
-    {% if isSearching %}
-    <div class="row">
-        <div class="column">
-            <h1>Amazon</h1>
-            {% for item1 in itemsAmazon %}
-            <p><a href={{item1[2]}}>{{item1[0]}}</a></p>
-            <p style="color: red;">{{item1[1]}}</p>
+        <br>
+        <br>
+        <br>
+        {% if isSearching %}
+        <div class="row">
+            <div class="column">
+                <h1 class="text-dark">Amazon</h1>
+                {% for item1 in itemsAmazon %}
+                <p style="text-align: justify;"><a href={{item1[2]}} class="text-info">{{item1[0]}}</a></p>
+                <p class="text-secondary">{{item1[1]}}</p>
 
-            {% endfor %}
-        </div>
-        <div class="column">
-            <h1>TapAz</h1>
-            {% for item2 in itemsTapaz %}
-            <p><a href={{item2[2]}}>{{item2[0]}}</a></p>
-            <p style="color: red;">{{item2[1]}}</p>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="column">
+                <h1 class="text-dark">TapAz</h1>
+                {% for item2 in itemsTapaz %}
+                <p style="text-align: justify;"><a href={{item2[2]}} class="text-info">{{item2[0]}}</a></p>
+                <p class="text-secondary">{{item2[1]}}</p>
+                {% endfor %}
+
+            </div>
 
         </div>
-        <div class="column">
-            <h1>AliExpress</h1>
-        </div>
+        {% endif %}
+
+
+        {% endif %}
+
     </div>
-    {% endif %}
-
-    {% endif %}
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

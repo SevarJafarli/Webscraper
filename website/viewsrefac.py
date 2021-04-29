@@ -2,9 +2,11 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 import csv
 from webscraper import *
+from refactored import *
 
 views = Blueprint('views', __name__)
 ls_all = []
+
 
 @views.route('/')
 @login_required
@@ -51,10 +53,10 @@ def findPage(itemToFind, store_list, filterOption, isAscending, price_from, pric
 
                 if row["site"] == "amazon":
                     row["link"] = "https://amazon.com" + row["link"]
-                    row["title"] += " -Amazon"
+                    row["title"] += "(Amazon)"
                 if row["site"] == "tapaz":
                     row["link"] = "https://tap.az" + row["link"]
-                    row["title"] += " -TapAz"
+                    row["title"] += "(TapAz)"
 
                 ls_temp = [row["title"], row["price"],
                            row["link"], row["site"]]
@@ -124,6 +126,11 @@ def filterPrices(ls_all__, price_from, price_to):
     return ls_all__
 
 
+3200
+378.0
+3790
+
+
 @views.route("/process", methods=['GET', 'POST'])
 def process():
     ls_all.clear()
@@ -140,3 +147,6 @@ def process():
             return redirect(url_for("views.findPage", itemToFind=itemToFind, store_list=store_list, filterOption=filterOption, isAscending=isAscending, price_from=price_from, price_to=price_to, currency=currency))
 
     return redirect(url_for("views.home"))
+
+
+# 2345 245.6 2567
