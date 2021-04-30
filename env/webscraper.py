@@ -6,6 +6,7 @@ import os
 
 browser = webdriver.Chrome(executable_path="E:\driver\chromedriver.exe")
 
+
 def get_html(url):
     browser.get(url)
     return browser.page_source
@@ -24,11 +25,12 @@ def write_csv(ads):
 class Website:
     @staticmethod
     def do_scrape(card):
-        pass 
-    
+        pass
+
     def scraper(self, item):
-        pass 
-    
+        pass
+
+
 class Amazon(Website):
     @staticmethod
     def do_scrape(card):
@@ -76,7 +78,8 @@ class Amazon(Website):
             f.write("title,price,link,site\n")
         f.close()
         write_csv(ads_data)
-        
+
+
 class TapAz(Website):
     @staticmethod
     def do_scrape(card):
@@ -93,7 +96,7 @@ class TapAz(Website):
         site = 'tapaz'
         data = {'title': title, 'price': Price, 'link': link, 'site': site}
         return data
-    
+
     def scraper(self, item):
         ads_data = []
         url = f"https://tap.az/elanlar?utf8=%E2%9C%93&log=true&keywords={item}&q%5Bregion_id%5D="
@@ -109,12 +112,7 @@ class TapAz(Website):
             f.write("title,price,link,site\n")
         f.close()
         write_csv(ads_data)
-        
-        
-        
-    
-        
-        
+
 
 # from bs4 import BeautifulSoup
 # from selenium import webdriver
