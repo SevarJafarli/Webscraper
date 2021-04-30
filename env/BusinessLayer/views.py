@@ -2,9 +2,13 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 import csv
 from webscraper import *
+from tapaz import *
+from amazon import *
+from .filterer import *
 
 views = Blueprint('views', __name__)
 ls_all = []
+
 
 @views.route('/')
 @login_required
@@ -22,8 +26,8 @@ def truncate(n, decimals=0):
 def findPage(itemToFind, store_list, filterOption, isAscending, price_from, price_to, currency):
     ls_all = []
     _store_list = str(store_list)
-    obj1=Amazon()
-    obj2=TapAz()
+    obj1 = Amazon()
+    obj2 = TapAz()
     if "tapaz" in _store_list:
         obj2.scraper(itemToFind)
     if "amazon" in _store_list:
@@ -63,12 +67,13 @@ def findPage(itemToFind, store_list, filterOption, isAscending, price_from, pric
             line_count = line_count + 1
 
     _f = open('results.csv', "w+", encoding='utf-8')
-
+    filterer=Filterer()
+    sorter=Sorter()
     if filterOption.find('shipping') == -1:
-        ls_all = filterPrices(ls_all, price_from, price_to)[:]
+        ls_all =sorter.sortPrices(ls_all, price_from, price_to)[:]
 
     if filterOption != None:
-        ls_all = filterBy(ls_all, filterOption, isAscending)[:]
+        ls_all = filterer.filterBy(ls_all, filterOption, isAscending)[:]
 
     ls_amazon = []
     ls_tapaz = []
@@ -81,48 +86,48 @@ def findPage(itemToFind, store_list, filterOption, isAscending, price_from, pric
     return render_template("base.html", user=current_user, isSearching=True, itemsAmazon=ls_amazon, itemsTapaz=ls_tapaz)
 
 
-def filterBy(ls_all__, filterOption, isAscending):
-    if filterOption == "shipping":
-        _nonShipable = []
-        _shipable = []
-        for elem in ls_all__:
-            if elem[1] == "":
-                _nonShipable.append(elem)
-            else:
-                _shipable.append(elem)
-        ls_all__ = _nonShipable[:]
-        ls_all__.extend(_shipable)
+# def filterBy(ls_all__, filterOption, isAscending):
+#     if filterOption == "shipping":
+#         _nonShipable = []
+#         _shipable = []
+#         for elem in ls_all__:
+#             if elem[1] == "":
+#                 _nonShipable.append(elem)
+#             else:
+#                 _shipable.append(elem)
+#         ls_all__ = _nonShipable[:]
+#         ls_all__.extend(_shipable)
 
-    if filterOption == "price":
-        ls_all__ = sorted(ls_all__, key=lambda row: float(row[1][:-1]))
-        _ls_temp = []
-        for elem in ls_all__:
-            if elem[1] != "":
-                _ls_temp.append(elem)
-        ls_all__ = _ls_temp[:]
+#     if filterOption == "price":
+#         ls_all__ = sorted(ls_all__, key=lambda row: float(row[1][:-1]))
+#         _ls_temp = []
+#         for elem in ls_all__:
+#             if elem[1] != "":
+#                 _ls_temp.append(elem)
+#                 ls_all__ = _ls_temp[:]
 
-    if isAscending == "ascending":
-        isAscsending = True
-    else:
-        isAscending = False
+#     if isAscending == "ascending":
+#         isAscsending = True
+#     else:
+#         isAscending = False
 
-    if isAscending != None and not isAscending:
-        ls_all__ = ls_all__[::-1]
-    return ls_all__
+#     if isAscending != None and not isAscending:
+#         ls_all__ = ls_all__[::-1]
+#     return ls_all__
 
 
-def filterPrices(ls_all__, price_from, price_to):
-    if price_from == None:
-        price_from = 0
-    if price_to == None:
-        price_to = 100000000
+# def sortPrices(ls_all__, price_from, price_to):
+#     if price_from == None:
+#         price_from = 0
+#     if price_to == None:
+#         price_to = 100000000
 
-    _ls_temp = []
-    for elem in ls_all__:
-        if elem[1] != "" and elem[1].find('price') == -1 and elem[1].find(",") == -1 and float(elem[1][:-1]) >= int(price_from) and float(elem[1][:-1]) <= int(price_to):
-            _ls_temp.append(elem)
-    ls_all__ = _ls_temp[:]
-    return ls_all__
+#     _ls_temp = []
+#     for elem in ls_all__:
+#         if elem[1] != "" and elem[1].find('price') == -1 and elem[1].find(",") == -1 and float(elem[1][:-1]) >= int(price_from) and float(elem[1][:-1]) <= int(price_to):
+#             _ls_temp.append(elem)
+#     ls_all__ = _ls_temp[:]
+#     return ls_all__
 
 
 @views.route("/process", methods=['GET', 'POST'])
