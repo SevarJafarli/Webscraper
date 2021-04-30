@@ -5,6 +5,8 @@ import csv
 import os
 from webscraper import *
 from write_csv import *
+from browser import *
+
 class Amazon(Website):
     @staticmethod
     def do_scrape(card):

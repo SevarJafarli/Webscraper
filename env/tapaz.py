@@ -5,6 +5,7 @@ import csv
 import os
 from webscraper import *
 from write_csv import *
+from browser import *
 
 class TapAz(Website):
     @staticmethod

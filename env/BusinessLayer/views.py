@@ -5,6 +5,7 @@ from webscraper import *
 from tapaz import *
 from amazon import *
 from .filterer import *
+from browser import *
 
 views = Blueprint('views', __name__)
 ls_all = []
