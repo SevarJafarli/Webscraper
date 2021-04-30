@@ -3,10 +3,8 @@ from selenium import webdriver
 from pathlib import Path
 import csv
 import os
-# from my_website.views import *
 
 browser = webdriver.Chrome(executable_path="E:\driver\chromedriver.exe")
-
 
 def get_html(url):
     browser.get(url)
@@ -25,7 +23,15 @@ def write_csv(ads):
 
 class Website:
     @staticmethod
-    def scrapeAmazon(card):
+    def do_scrape(card):
+        pass 
+    
+    def scraper(self, item):
+        pass 
+    
+class Amazon(Website):
+    @staticmethod
+    def do_scrape(card):
         try:
             h2 = card.h2
 
@@ -50,7 +56,7 @@ class Website:
         data = {'title': title, 'price': price, 'link': link, 'site': site}
         return data
 
-    def scraperAmazon(self, item):
+    def scraper(self, item):
         ads_data = []
 
         for i in range(1, 5):
@@ -63,32 +69,17 @@ class Website:
                 'div', {'data-asin': True, 'data-component-type': 's-search-result'})
 
             for card in cards:
-                data = self.scrapeAmazon(card)
+                data = self.do_scrape(card)
                 ads_data.append(data)
 
         with open('results.csv', 'a+', encoding='utf-8') as f:
             f.write("title,price,link,site\n")
         f.close()
         write_csv(ads_data)
-
-    def scraperTapAz(self, item):
-        ads_data = []
-        url = f"https://tap.az/elanlar?utf8=%E2%9C%93&log=true&keywords={item}&q%5Bregion_id%5D="
-        html = get_html(url)
-        soup = BeautifulSoup(html, 'lxml')
-
-        cards = soup.find_all('div', class_='products-i rounded')
-        for card in cards:
-            data = self.scrapeTapAz(card)
-            ads_data.append(data)
-
-        with open('results.csv', 'a+', encoding='utf-8') as f:
-            f.write("title,price,link,site\n")
-        f.close()
-        write_csv(ads_data)
-
+        
+class TapAz(Website):
     @staticmethod
-    def scrapeTapAz(card):
+    def do_scrape(card):
         link = card.find('a', class_='products-link').get('href')
         title = card.find('div', class_='products-top').img.get('alt')
         price = card.find('div', class_='products-price-container')
@@ -102,17 +93,28 @@ class Website:
         site = 'tapaz'
         data = {'title': title, 'price': Price, 'link': link, 'site': site}
         return data
+    
+    def scraper(self, item):
+        ads_data = []
+        url = f"https://tap.az/elanlar?utf8=%E2%9C%93&log=true&keywords={item}&q%5Bregion_id%5D="
+        html = get_html(url)
+        soup = BeautifulSoup(html, 'lxml')
 
+        cards = soup.find_all('div', class_='products-i rounded')
+        for card in cards:
+            data = self.do_scrape(card)
+            ads_data.append(data)
 
-def main():
-    obj = Website()
-    obj.scraperAmazon("PC")
-
-
-if __name__ == "__main__":
-    if __name__ == '__main__':
-        main()
-
+        with open('results.csv', 'a+', encoding='utf-8') as f:
+            f.write("title,price,link,site\n")
+        f.close()
+        write_csv(ads_data)
+        
+        
+        
+    
+        
+        
 
 # from bs4 import BeautifulSoup
 # from selenium import webdriver

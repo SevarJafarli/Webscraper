@@ -22,11 +22,12 @@ def truncate(n, decimals=0):
 def findPage(itemToFind, store_list, filterOption, isAscending, price_from, price_to, currency):
     ls_all = []
     _store_list = str(store_list)
-    obj=Website()
+    obj1=Amazon()
+    obj2=TapAz()
     if "tapaz" in _store_list:
-        obj.scraperTapAz(itemToFind)
+        obj2.scraper(itemToFind)
     if "amazon" in _store_list:
-        obj.scraperAmazon(itemToFind)
+        obj1.scraper(itemToFind)
 
     with open('results.csv', mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
