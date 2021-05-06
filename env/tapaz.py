@@ -7,7 +7,7 @@ from webscraper import *
 from write_csv import *
 from browser import *
 
-class TapAz(Website):
+class TapAz(WebScraper):
     @staticmethod
     def do_scrape(card):
         link = card.find('a', class_='products-link').get('href')

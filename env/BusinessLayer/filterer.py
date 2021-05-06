@@ -20,16 +20,16 @@ class Filterer:
                     ls_all__ = _ls_temp[:]
 
         if isAscending == "ascending":
-            isAscsending = True
+            Ascending = True
         else:
-            isAscending = False
+            Ascending = False
 
         if isAscending != None and not isAscending:
             ls_all__ = ls_all__[::-1]
         return ls_all__
-
-class Sorter:
-    def sortPrices(self, ls_all__, price_from, price_to):
+    
+class Price:
+    def FilterPrices(self, ls_all__, price_from, price_to):
         if price_from == None:
             price_from = 0
         if price_to == None:
