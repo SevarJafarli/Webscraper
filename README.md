@@ -7,6 +7,9 @@
 - [General info](#general_info)
 - [Technologies](#technologies)
 - [Installing the project](#setup)
+- [Features](#features)
+- [Example of use](#example_of_use)
+
 
 ## General info
 
