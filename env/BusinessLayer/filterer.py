@@ -30,14 +30,7 @@ class Filterer:
                     
         ls_all__= self.sort(ls_all__)
         return ls_all__
-        # if isAscending == "ascending":
-        #     Ascending = True
-        # else:
-        #     Ascending = False
-
-        # if isAscending != None and not isAscending:
-        #     ls_all__ = ls_all__[::-1]
-        # return ls_all__
+     
 
     def sort(self, ls_all__):
          ls_all__ = ls_all__[:]
