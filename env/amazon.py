@@ -35,11 +35,13 @@ class Amazon(WebScraper):
         return data
 
     def scraper(self, item):
+        browser=Browser(webdriver.Chrome(executable_path="E:\driver\chromedriver.exe"))
         ads_data = []
+       
 
-        for i in range(1, 5):
+        for i in range(1, 3):
             url = f'https://www.amazon.com/s?k={item}&page={i}&qid=1617312099&ref=sr_pg_2'
-            html = get_html(url)
+            html = browser.get_html(url)
 
             soup = BeautifulSoup(html, 'lxml')
 

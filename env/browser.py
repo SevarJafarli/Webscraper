@@ -4,9 +4,11 @@ from pathlib import Path
 import csv
 import os
 from write_csv import *
-browser = webdriver.Chrome(executable_path="E:\driver\chromedriver.exe")
 
-
-def get_html(url):
-    browser.get(url)
-    return browser.page_source
+class Browser:
+    def __init__(self, browser):
+        self.browser=browser
+   
+    def get_html(self,url):
+        self.browser.get(url)
+        return self.browser.page_source

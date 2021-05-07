@@ -6,6 +6,7 @@ from tapaz import *
 from amazon import *
 from .filterer import *
 from browser import *
+from .exchanger import *
 
 
 views = Blueprint('views', __name__)
@@ -19,9 +20,7 @@ def home():
     return render_template("home.html", user=current_user, isSearching=False)
 
 
-def truncate(n, decimals=0):
-    multiplier = 10 ** decimals
-    return int(n * multiplier) / multiplier
+exchanger=Exchange()
 
 
 @views.route("/find/<itemToFind>/stores/<store_list>/filterBy/<filterOption>/<isAscending>/priceRange/from/<price_from>/to/<price_to>/currency/<currency>", methods=['GET', 'POST'])
@@ -34,7 +33,8 @@ def findPage(itemToFind, store_list, filterOption, isAscending, price_from, pric
         obj2.scraper(itemToFind)
     if "amazon" in _store_list:
         obj1.scraper(itemToFind)
-
+        
+    
     with open('results.csv', mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         line_count = 0
@@ -46,11 +46,11 @@ def findPage(itemToFind, store_list, filterOption, isAscending, price_from, pric
                             row["price"] = row["price"] + "₼"  # ₼
                         if row["site"] == "amazon":
                             row["price"] = str(
-                                truncate(int(row["price"]) * 1.7, 2)) + "₼"
+                                exchanger.truncate(int(row["price"]) * 1.7, 2)) + "₼"
                     elif currency == "usd":  # us dollars
                         if row["site"] == "tapaz":
                             row["price"] = str(
-                                truncate(int(row["price"]) / 1.7, 2)) + "$"
+                                exchanger.truncate(int(row["price"]) / 1.7, 2)) + "$"
                         if row["site"] == "amazon":
                             row["price"] = row["price"] + "$"
                 else:
@@ -69,13 +69,13 @@ def findPage(itemToFind, store_list, filterOption, isAscending, price_from, pric
             line_count = line_count + 1
 
     _f = open('results.csv', "w+", encoding='utf-8')
-    filterer = Filterer()
-    pricefilter = Price()
+    filterer = Filterer(ls_all, filterOption, price_from, price_to, isAscending)
+    
     if filterOption.find('shipping') == -1:
-        ls_all = pricefilter.FilterPrices(ls_all, price_from, price_to)[:]
+        ls_all = filterer.FilterPrices(ls_all, price_from, price_to)[:]
 
     if filterOption != None:
-        ls_all = filterer.filterBy(ls_all, filterOption, isAscending)[:]
+        ls_all = filterer.filterBy(ls_all, filterOption)[:]
 
     ls_amazon = []
     ls_tapaz = []

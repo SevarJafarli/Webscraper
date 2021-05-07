@@ -25,9 +25,10 @@ class TapAz(WebScraper):
         return data
 
     def scraper(self, item):
+        browser=Browser(webdriver.Chrome(executable_path="E:\driver\chromedriver.exe"))
         ads_data = []
         url = f"https://tap.az/elanlar?utf8=%E2%9C%93&log=true&keywords={item}&q%5Bregion_id%5D="
-        html = get_html(url)
+        html = browser.get_html(url)
         soup = BeautifulSoup(html, 'lxml')
 
         cards = soup.find_all('div', class_='products-i rounded')
