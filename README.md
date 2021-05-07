@@ -10,7 +10,6 @@
 - [Features](#features)
 - [Example of use](#example_of_use)
 
-
 ## General info
 
 This is a Webscraper project scraping data from Amazon and TapAz.
@@ -35,18 +34,23 @@ $ git clone https://github.com/SevarJafarli/Webscraper.git
 
 Also make sure that you have a Chrome webdriver: https://chromedriver.chromium.org/
 
+### Run the project
+
+```
+python3 ./main.py
+```
+
 ## Features
 
-- Get item any from Amazon and TapAz
-- Filter item based on price, currency and shipping(only from Amazon)
+- Search item from Amazon and TapAz
+- Filter item based on price, currency, order(ascending or descending) and shipping(only from Amazon)
 
+### UML diagram
 
-### UML diagram 
-![UML](env/image/img3.png?raw=true "UML diagram")
+![UML](env/image/Project.png?raw=true "UML diagram")
 
 ## Example of use
 
 ![Website](env/image/img1.png?raw=true "Website Home Page")
-
 
 ![Search Result](env/image/img2.png?raw=true "Search Result")
