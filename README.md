@@ -41,7 +41,7 @@ Also make sure that you have a Chrome webdriver: https://chromedriver.chromium.o
 - Filter item based on price, currency and shipping(only from Amazon)
 
 
-### UMl diagram 
+### UML diagram 
 ![UML](env/image/img3.png?raw=true "UML diagram")
 
 ## Example of use
