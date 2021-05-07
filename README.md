@@ -40,6 +40,10 @@ Also make sure that you have a Chrome webdriver: https://chromedriver.chromium.o
 - Get item any from Amazon and TapAz
 - Filter item based on price, currency and shipping(only from Amazon)
 
+
+### UMl diagram 
+![UML](env/image/img3.png?raw=true "UML diagram")
+
 ## Example of use
 
 ![Website](env/image/img1.png?raw=true "Website Home Page")
