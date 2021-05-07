@@ -1,6 +1,6 @@
 # Webscraper - project for OOP class
 
-## a Webscraper project created with Python, Selenium and BeautifulSoup
+## Webscraper project created with Python, Selenium and BeautifulSoup
 
 ## Table of contents
 
@@ -39,6 +39,7 @@ Also make sure that you have a Chrome webdriver: https://chromedriver.chromium.o
 
 ## Example of use
 
-![Website](env/image/img1.png?raw=true)
+![Website](env/image/img1.png?raw=true "Website Home Page")
 
-![Search Result](env/image/img2.png?raw=true)
+
+![Search Result](env/image/img2.png?raw=true "Search Result")
